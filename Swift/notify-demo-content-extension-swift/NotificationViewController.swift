@@ -1,0 +1,76 @@
+//
+//  NotificationViewController.swift
+//  notify-demo-content-extension-swift
+//
+//  Copyright © 2023 Mail.Ru LLC. All rights reserved.
+//
+
+import UIKit
+import UserNotifications
+import UserNotificationsUI
+import CXHubCore
+import CXHubNotify
+
+class NotificationViewController: UIViewController, UNNotificationContentExtension {
+    
+    private var apiIsInitialized :  Bool = false
+    
+    @IBOutlet weak var bigContentImage: UIImageView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        //Init sdk
+        //guard let config = CXAppConfig.default() else { fatalError() }
+        
+        guard let configFile = Bundle.main.path(forResource: "Notify", ofType: "plist") else { fatalError() };
+        guard let config = CXAppConfig(config: configFile) else { fatalError() }
+        
+        apiIsInitialized = CXApp.initExtension(with: config, withEventsReceiver: nil)
+    }
+ 
+    func didReceive(_ notification: UNNotification) {
+        let processed = CXNotify.requestNotificationExtensionContent(notification, with: self)
+        
+        if !processed {
+            //Do some custom logic with a particular notification as it is not originated from
+            //CXHubSDK API.
+        }
+    }
+    
+    func didReceive(_ response: UNNotificationResponse, completionHandler completion: @escaping (UNNotificationContentExtensionResponseOption) -> Void) {
+        
+        if self.apiIsInitialized  {
+            //For correct work of CXHubSDK, you need to check your ContentExtension Info.plist file to ensure
+            //providing enough categories under Info.plist -> NSExtension -> NSExtensionAttributes -> UNNotificationExtensionCategory key
+            //The same categories must be listed in Notify.plist (for all main app and both extensions) under Root -> LibNotify -> UNNotificationExtensionCategory key
+            //Please, check the sample Notify.plist file provided for this demo-app.
+            
+            guard let context = self.extensionContext else { //context is required to determine which UNNotificationAction is called
+                //Catch action by yourself, cause extension wasn't properly initialized
+                return
+            }
+            CXApp.didReceiveExtensionNotificationResponse(response, in: context, completionHandler: completion)
+        }
+        else {
+            //Catch action by yourself, cause CXHubSDK wasn't initialized correctly
+        }
+    }
+}
+
+extension NotificationViewController: CXContentExtensionDelegate {
+
+    func onContentUpdated(_ content: CXContentExtensionData?, for notification: UNNotification, withError error: Error?) {
+        
+        let localContent: CXContentExtensionData? = content
+
+        DispatchQueue.main.async {
+            guard let content = localContent, let attachmentData = content.attachmentData, error == nil else {
+                return
+            }
+            
+            self.bigContentImage.image = UIImage(data: attachmentData)
+        }
+    }
+}
+

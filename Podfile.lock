@@ -1,0 +1,20 @@
+PODS:
+  - CXHubSDK (1.0.0):
+    - CXHubSDK/CXHubCore (= 1.0.0)
+    - CXHubSDK/CXHubNotify (= 1.0.0)
+  - CXHubSDK/CXHubCore (1.0.0)
+  - CXHubSDK/CXHubNotify (1.0.0)
+
+DEPENDENCIES:
+  - CXHubSDK (from `../../CXHubSDK_LocalGit/CXHubSDK`)
+
+EXTERNAL SOURCES:
+  CXHubSDK:
+    :path: "../../CXHubSDK_LocalGit/CXHubSDK"
+
+SPEC CHECKSUMS:
+  CXHubSDK: d6a93082333aa48f4cc67078e78e4666bafb939f
+
+PODFILE CHECKSUM: 7ab91d5de0812dba3954489e091d417948990b66
+
+COCOAPODS: 1.11.3
