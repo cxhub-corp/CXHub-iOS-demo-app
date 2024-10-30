@@ -24,6 +24,7 @@ class NotifyViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var devicePushToken: UITextView!
     @IBOutlet weak var instanceId: UITextView!
+    @IBOutlet weak var useSandbox: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +39,21 @@ class NotifyViewController: UIViewController, UITextFieldDelegate {
             self.devicePushToken.text = (notification.object as? String) ?? nil
         }
         //Set user id after some delay to imitate user login process
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(5)) {
+        //DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(5)) {
             //Inform CXHub about userId change
-            CXNotify.getInstance()?.setUserId(Constants.defaultTestUserId)
-        }
+        //    CXNotify.getInstance()?.setUserId(Constants.defaultTestUserId)
+        //}
         self.instanceId.text = CXNotify.getInstance()?.getInstanceId()
+        var isUseSandboxString: String! = "YES"
+        var isUseSandbox: Bool! = false
+        isUseSandbox = CXApp.isAPNSSandbox
+        if(!isUseSandbox) {
+            isUseSandboxString = "NO"
+        }
+        self.useSandbox.text = isUseSandboxString
+        let text = self.useSandbox.text
+        NSLog("useSandbox: %@", text ?? "unknown")
+        NSLog("", "")
     }
     
 
@@ -51,8 +62,8 @@ class NotifyViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(.init(title: "Enabled", style: .default, handler: { (_) in
             CXNotify.getInstance()?.notificationState = .enabled
         }))
-        alert.addAction(.init(title: "Only transaction", style: .default, handler: { (_) in
-            CXNotify.getInstance()?.notificationState = .onlyTransactions
+        alert.addAction(.init(title: "Restricted", style: .default, handler: { (_) in
+            CXNotify.getInstance()?.notificationState = .restricted
         }))
         alert.addAction(.init(title: "Disabled", style: .destructive, handler: { (_) in
             CXNotify.getInstance()?.notificationState = .disabled

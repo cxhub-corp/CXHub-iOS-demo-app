@@ -11,15 +11,30 @@ import UserNotificationsUI
 import CXHubCore
 import CXHubNotify
 
-class NotificationViewController: UIViewController, UNNotificationContentExtension {
+class NotificationViewControllerSwift: UIViewController, UNNotificationContentExtension {
     
     private var apiIsInitialized :  Bool = false
     
-    @IBOutlet weak var bigContentImage: UIImageView!
-
+    @IBOutlet var bigContentImage: UIImageView!
+    @IBOutlet var contentExtensionLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.initializeSDK()
+    }
+     
+    func didReceive(_ notification: UNNotification) {
+        let processed = apiIsInitialized && CXNotify.requestNotificationExtensionContent(notification, with: self)
         
+        if (!processed) {
+            //Do some custom logic with a particular notification as it is not originated from CXHubSDK API.
+        }
+        else {
+            self.contentExtensionLabel.text = notification.request.content.title;
+        }
+    }
+    
+    func initializeSDK () {
         //Init sdk
         //guard let config = CXAppConfig.default() else { fatalError() }
         
@@ -28,18 +43,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         
         apiIsInitialized = CXApp.initExtension(with: config, withEventsReceiver: nil)
     }
- 
-    func didReceive(_ notification: UNNotification) {
-        let processed = CXNotify.requestNotificationExtensionContent(notification, with: self)
-        
-        if !processed {
-            //Do some custom logic with a particular notification as it is not originated from
-            //CXHubSDK API.
-        }
-    }
     
     func didReceive(_ response: UNNotificationResponse, completionHandler completion: @escaping (UNNotificationContentExtensionResponseOption) -> Void) {
-        
         if self.apiIsInitialized  {
             //For correct work of CXHubSDK, you need to check your ContentExtension Info.plist file to ensure
             //providing enough categories under Info.plist -> NSExtension -> NSExtensionAttributes -> UNNotificationExtensionCategory key
@@ -58,7 +63,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     }
 }
 
-extension NotificationViewController: CXContentExtensionDelegate {
+extension NotificationViewControllerSwift: CXContentExtensionDelegate {
 
     func onContentUpdated(_ content: CXContentExtensionData?, for notification: UNNotification, withError error: Error?) {
         
@@ -70,6 +75,7 @@ extension NotificationViewController: CXContentExtensionDelegate {
             }
             
             self.bigContentImage.image = UIImage(data: attachmentData)
+            self.contentExtensionLabel.text = String(format: "%@\n%@", notification.request.content.title,"Content updated")
         }
     }
 }

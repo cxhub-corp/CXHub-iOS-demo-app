@@ -57,9 +57,9 @@ Root :
  
     LibNotify : 
         Application : 
-            Name | String | <your_app_name_in_CXHub>
-            Id | String | <your_app_id_in_CXHub>
-            Secret | String | <your_app_secret_in_CXHub>
+            ApiUrlHost | String | <your_CXHub_project_URL + /callback-service/ >
+            IntegrationId | String | <your_integration_id_in_CXHub>
+            Secret | String | <your_integration_secret_in_CXHub>
         
     SharedGroupId | String | <your_app_shared_group_identifier> //тот же, что и в п.1 выше
 ```

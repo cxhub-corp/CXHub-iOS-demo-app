@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CXNotify.getInstance()?.collectEvent(Constants.testEvent2, withValue: Constants.testValue2)
         //An application could customize notification landing view using keys in Info.plist file starting with CX prefix.
         //Check out CXHubSDK documentation to understand actual meaning of all provided keys.
-
+        self.setUserId()
         return true
     }
     
@@ -173,7 +173,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         switch res {
         case .failure, .unknown:
-            completionHandler([.alert, .sound])
+            completionHandler([.banner,.list, .sound])
         default:
             break
         }
@@ -257,6 +257,14 @@ extension AppDelegate: CXNotifyDelegate {
 }
 
 private extension AppDelegate {
+    func setUserId() {
+        let userEmail = "vladimir_2_test.gk.2011_dont_use_please@mail.ru"
+        let popTime = DispatchTime(uptimeNanoseconds: 2*NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: popTime) {
+            CXNotify.getInstance()?.setUserId(userEmail, ofType: "Email")
+            CXNotify.getInstance()?.setInstanceProperty("Email", withStringValue: userEmail)
+        }
+    }
     
     func registerForRemoteNotifications() throws {
         

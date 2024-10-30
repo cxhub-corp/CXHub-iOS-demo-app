@@ -1,11 +1,10 @@
 project "notify-demo-app.xcodeproj"
 use_frameworks!
 #
-platform :ios, '12.1'
+platform :ios, '14.0'
 #
 abstract_target 'CXHubSDK' do
-        #pod 'CXHubSDK', '2.0.37'
-        pod 'CXHubSDK', :path => "../../CXHubSDK_LocalGit/CXHubSDK"
+        pod 'CXHubSDK', '3.0.00'
 #
     target 'notify-demo-app-objc'
         target 'notify-demo-service-extension-objc'

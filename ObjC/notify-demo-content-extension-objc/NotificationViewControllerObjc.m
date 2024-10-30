@@ -5,9 +5,7 @@
 //  Copyright © 2023 Mail.Ru LLC. All rights reserved.
 //
 
-#import "NotificationViewController.h"
-#import <UserNotifications/UserNotifications.h>
-#import <UserNotificationsUI/UserNotificationsUI.h>
+#import "NotificationViewControllerObjc.h"
 
 @import CXHubCore;
 @import CXHubNotify;
@@ -15,13 +13,16 @@
 static NSString const* LOG_TAG = @"NotificationViewController";
 static bool apiIsInitialized = false;
 
-@interface NotificationViewController () <UNNotificationContentExtension>
+@interface NotificationViewControllerObjc ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *bigContentImage;
+@property (nonatomic, strong) UIImageView *bigContentImage;
+@property (nonatomic, strong) UILabel *contentExtensionLabel;
 
 @end
 
-@implementation NotificationViewController
+@implementation NotificationViewControllerObjc
+
+
 
 +(void)initialize {
     //Init CXHubSDK with default config, contained in provided Notify.plist
@@ -30,6 +31,7 @@ static bool apiIsInitialized = false;
     NSString *configFile = [[NSBundle mainBundle] pathForResource:@"Notify" ofType:@"plist"];
     CXAppConfig *config = [[CXAppConfig alloc] initWithConfig:configFile];
     apiIsInitialized = [CXApp initExtensionWithConfig:config withEventsReceiver:nil];
+    NSLog(@"apiIsInitialized: %@",apiIsInitialized ? @"YES":@"NO");
     
     //If you use come custom config, then you may use:
     /**
@@ -43,14 +45,38 @@ static bool apiIsInitialized = false;
     
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if(!self->_bigContentImage) {
+        self->_bigContentImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        self->_bigContentImage.contentMode = UIViewContentModeScaleAspectFit;
+        [self.view addSubview:self->_bigContentImage];
+    }
+    if(!self->_contentExtensionLabel) {
+        self->_contentExtensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 24)];
+        self->_contentExtensionLabel.text = @"This is ContentExtension view";
+        self->_contentExtensionLabel.textAlignment = NSTextAlignmentCenter;
+        self.contentExtensionLabel.textColor = UIColor.greenColor;
+        self.contentExtensionLabel.backgroundColor = UIColor.whiteColor;
+        [self.view addSubview:self->_contentExtensionLabel];
+    }
     // Do any required interface initialization here.
+}
+
+- (void)viewWillLayoutSubviews {
+    self.bigContentImage.frame = self.view.bounds;
+    self.bigContentImage.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+    
+    self.contentExtensionLabel.frame = CGRectMake(0, 0, self.view.bounds.size.width, 24);
+    self.contentExtensionLabel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+    [super viewWillLayoutSubviews];
 }
 
 #pragma mark UNNotificationContentExtension Delegate
 
 - (void)didReceiveNotification:(UNNotification *)notification {
+    NSLog(@"didReceiveNotification -> (apiIsInitialized: %@)",apiIsInitialized ? @"YES":@"NO");
     if (!apiIsInitialized) {
         //Some error occured while initializing library, you need to handle such situations according to your app's logic
         return;
@@ -62,6 +88,9 @@ static bool apiIsInitialized = false;
     
     if (!processed) {
         //Do some custom logic with a particular notification as it is not originated from CXHubSDK API.
+    }
+    else {
+        self.contentExtensionLabel.text = notification.request.content.title;
     }
 }
 
@@ -92,7 +121,15 @@ static bool apiIsInitialized = false;
         if (error != nil || content == nil || content.attachmentData == nil) {
             return;
         }
-        [self.bigContentImage setImage:[UIImage imageWithData:content.attachmentData]];
+        if(self.bigContentImage) {
+            NSData *imgData = content.attachmentData;
+            UIImage *img = [UIImage imageWithData:imgData];
+            [self->_bigContentImage setImage:img]; //[UIImage imageWithData:content.attachmentData]];
+        }
+        else {
+            self.contentExtensionLabel.text = [NSString stringWithFormat:@"%@/n%@",notification.request.content.title,@"Content Updated"];
+        }
+        [self.view layoutIfNeeded];
     });
 }
 

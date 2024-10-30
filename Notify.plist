@@ -5,7 +5,7 @@
 	<key>Enabled</key>
 	<true/>
 	<key>Debug</key>
-	<true/>
+	<false/>
 	<key>LibNotify</key>
 	<dict>
 		<key>UNNotificationExtensionCategory</key>
@@ -66,15 +66,15 @@
 		<true/>
 		<key>Application</key>
 		<dict>
-			<key>Name</key>
-			<string>&lt;your_cxhub_app_name&gt;</string>
-			<key>Id</key>
-			<string>&lt;your_cxhub_app_id&gt;</string>
+			<key>ApiUrlHost</key>
+			<string></string>
+			<key>IntegrationId</key>
+			<string></string>
 			<key>Secret</key>
-			<string>&lt;your_cxhub_app_secret&gt;</string>
+			<string></string>
 		</dict>
 	</dict>
 	<key>SharedGroupId</key>
-	<string>&lt;your_app_group_identifier&gt;</string>
+	<string></string>
 </dict>
 </plist>

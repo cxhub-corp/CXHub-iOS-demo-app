@@ -12,7 +12,7 @@
 		<key>notify-demo-app-swift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>12</integer>
 		</dict>
 		<key>notify-demo-content-extension-objc.xcscheme_^#shared#^_</key>
 		<dict>
@@ -22,7 +22,7 @@
 		<key>notify-demo-content-extension-swift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>10</integer>
 		</dict>
 		<key>notify-demo-service-extension-objc.xcscheme_^#shared#^_</key>
 		<dict>
@@ -32,7 +32,25 @@
 		<key>notify-demo-service-extension-swift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>11</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>D8C472ED29FA903200F3ADA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D8C4732129FAAE8C00F3ADA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D8C4733129FAAEF900F3ADA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

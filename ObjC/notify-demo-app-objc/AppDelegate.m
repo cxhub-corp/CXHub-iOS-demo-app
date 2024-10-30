@@ -278,7 +278,7 @@ static NSString *const LOG_TAG = @"AppDelegate";
         NSLog(@"%@ - user info (foreground): %@, processed by libverify: %lu",
               LOG_TAG, notification.request.content.userInfo, (unsigned long)result);
     } else {
-        completionHandler(UNNotificationPresentationOptionAlert);
+        completionHandler(UNNotificationPresentationOptionBanner|UNNotificationPresentationOptionList|UNNotificationPresentationOptionSound);
     }
 }
 

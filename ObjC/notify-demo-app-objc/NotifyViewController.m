@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 @import CXHubNotify;
 
-static NSString *const DEFAULT_TEST_USER_ID = @"some@mail.ru";
+static NSString *const DEFAULT_TEST_USER_ID = @"vladimir_2_test.gk.2011_dont_use_please@mail.ru";
 
 @interface NotifyViewController ()
 
@@ -24,7 +24,7 @@ static NSString *const DEFAULT_TEST_USER_ID = @"some@mail.ru";
         CXNotify.getInstance.notificationState = CXNotificationStateEnabled;
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Only transactions" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        CXNotify.getInstance.notificationState = CXNotificationStateOnlyTransactions;
+        CXNotify.getInstance.notificationState = CXNotificationStateRestricted;
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Disabled" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         CXNotify.getInstance.notificationState = CXNotificationStateDisabled;
@@ -68,10 +68,10 @@ static NSString *const DEFAULT_TEST_USER_ID = @"some@mail.ru";
         self.devicePushToken.text = (NSString*) note.object;
     }];
     //Set user id after some delay to imitate user login process
-    const dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 5);
+    const dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2);
     dispatch_after(popTime, dispatch_get_main_queue(), ^{
         //Inform CXHub about userId change
-        [[CXNotify getInstance] setUserId:DEFAULT_TEST_USER_ID];
+        [[CXNotify getInstance] setUserId:DEFAULT_TEST_USER_ID ofType:@"Email"];
     });
     self.instanceId.text = [[CXNotify getInstance] getInstanceId];
 }

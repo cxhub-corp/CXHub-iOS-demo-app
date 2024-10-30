@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1520"
-   version = "1.3">
+   wasCreatedForAppExtension = "YES"
+   version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,9 +15,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D8E8E56029F16BB900BDF7C1"
-               BuildableName = "notify-demo-app-objc.app"
-               BlueprintName = "notify-demo-app-objc"
+               BlueprintIdentifier = "D8C4732129FAAE8C00F3ADA8"
+               BuildableName = "notify-demo-service-extension-swift.appex"
+               BlueprintName = "notify-demo-service-extension-swift"
+               ReferencedContainer = "container:notify-demo-app.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D8C472ED29FA903200F3ADA8"
+               BuildableName = "notify-demo-app-swift.app"
+               BlueprintName = "notify-demo-app-swift"
                ReferencedContainer = "container:notify-demo-app.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,27 +41,28 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
+      askForAppToLaunch = "Yes"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
+      allowLocationSimulation = "YES"
+      launchAutomaticallySubstyle = "2">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D8E8E56029F16BB900BDF7C1"
-            BuildableName = "notify-demo-app-objc.app"
-            BlueprintName = "notify-demo-app-objc"
+            BlueprintIdentifier = "D8C472ED29FA903200F3ADA8"
+            BuildableName = "notify-demo-app-swift.app"
+            BlueprintName = "notify-demo-app-swift"
             ReferencedContainer = "container:notify-demo-app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -56,14 +72,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      debugDocumentVersioning = "YES">
+      debugDocumentVersioning = "YES"
+      launchAutomaticallySubstyle = "2">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D8E8E56029F16BB900BDF7C1"
-            BuildableName = "notify-demo-app-objc.app"
-            BlueprintName = "notify-demo-app-objc"
+            BlueprintIdentifier = "D8C472ED29FA903200F3ADA8"
+            BuildableName = "notify-demo-app-swift.app"
+            BlueprintName = "notify-demo-app-swift"
             ReferencedContainer = "container:notify-demo-app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
